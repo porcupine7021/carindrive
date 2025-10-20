@@ -1,4 +1,4 @@
-# CarInDrive
+# Carindrive
 > 차량 렌트 예약 웹 서비스  
 > 사용자 인증, 이메일 인증, 카카오 소셜 로그인 기반의 차량 렌트 플랫폼
 
@@ -45,40 +45,41 @@
 - 비밀번호 MD5 해시 암호화  
 - 중복 이메일 검사 후 가입 처리
 
-```java
+회원가입 (비밀번호 해시 후 저장)
 cm.setM_pwd(CarPwdCh.getPassWordToXEMD5String(cm.getM_pwd()));
 memberService.insertMember(cm);
+
 로그인 및 세션 관리
+
 일반회원(m_state=1) / 관리자(m_state=9) 구분
 
 비밀번호 해시 검증 후 세션 저장
 
-java
-코드 복사
 MemberVO cm = memberService.loginCheck(m_id);
 if (cm != null && cm.getM_pwd().equals(CarPwdCh.getPassWordToXEMD5String(m_pwd))) {
     session.setAttribute("memberInfo", cm);
     session.setAttribute("id", m_id);
 }
-이메일 인증 기반 아이디 / 비밀번호 찾기
+
+이메일 인증 기반 아이디/비밀번호 찾기
+
 RegisterMail 서비스로 인증코드 발송
 
 세션에 인증코드 저장 후 검증 처리
 
-java
-코드 복사
 String code = registerMail.sendSimpleMessage(m_email);
 session.setAttribute("code", code);
+
 트러블슈팅
 문제	원인	해결
 로그인 시 비밀번호 불일치	평문/해시 혼용	가입·로그인 시 동일 해시 적용
 이메일 중복 가입	동시 요청 경쟁	DB UNIQUE 제약 + 서비스 중복 검사 병행
 카카오 이메일 null	일부 계정 이메일 미제공	닉네임 기반 식별자 생성 로직 추가
 MD5 보안 취약	레거시 해시 사용	BCrypt 기반 PasswordEncoder 전환 예정
-
 배운 점 및 개선 계획
+
 회원 인증과 OAuth 흐름을 직접 구현하며 세션, 암호화, 외부 API 연동 구조를 이해함.
-다음 단계에서는 다음과 같은 개선을 계획함:
+다음 단계 개선:
 
 Spring Security 기반 비밀번호 인코딩(BCrypt)
 
@@ -89,8 +90,6 @@ Swagger API 문서 자동화
 이메일 인증 및 비밀번호 재설정 절차 고도화
 
 디렉토리 구조
-css
-코드 복사
 carindrive/
  ┣ src/main/java/com/carindrive/
  ┃ ┣ controller/
@@ -106,3 +105,4 @@ carindrive/
  ┃ ┣ member-mapper.xml
  ┃ ┗ social-mapper.xml
  ┗ pom.xml
+
