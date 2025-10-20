@@ -51,11 +51,12 @@ cm.setM_pwd(CarPwdCh.getPassWordToXEMD5String(cm.getM_pwd()));
 memberService.insertMember(cm);
 로그인 및 세션 관리
 일반회원(m_state=1) / 관리자(m_state=9) 구분
+```
 
 비밀번호 해시 검증 후 세션 저장
 
-java
-코드 복사
+```java
+
 MemberVO cm = memberService.loginCheck(m_id);
 if (cm != null && cm.getM_pwd().equals(CarPwdCh.getPassWordToXEMD5String(m_pwd))) {
     session.setAttribute("memberInfo", cm);
@@ -65,11 +66,14 @@ if (cm != null && cm.getM_pwd().equals(CarPwdCh.getPassWordToXEMD5String(m_pwd))
 RegisterMail 서비스로 인증코드 발송
 
 세션에 인증코드 저장 후 검증 처리
+```
 
-java
-코드 복사
+```java
+
 String code = registerMail.sendSimpleMessage(m_email);
 session.setAttribute("code", code);
+```
+
 트러블슈팅
 문제	원인	해결
 로그인 시 비밀번호 불일치	평문/해시 혼용	가입·로그인 시 동일 해시 적용
@@ -107,5 +111,6 @@ carindrive/
  ┃ ┣ member-mapper.xml
  ┃ ┗ social-mapper.xml
  ┗ pom.xml
-yaml
-코드 복사
+
+
+
