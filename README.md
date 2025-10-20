@@ -74,28 +74,32 @@ String code = registerMail.sendSimpleMessage(m_email);
 session.setAttribute("code", code);
 ```
 
-트러블슈팅
-문제	원인	해결
-로그인 시 비밀번호 불일치	평문/해시 혼용	가입·로그인 시 동일 해시 적용
-이메일 중복 가입	동시 요청 경쟁	DB UNIQUE 제약 + 서비스 중복 검사 병행
-카카오 이메일 null	일부 계정 이메일 미제공	닉네임 기반 식별자 생성 로직 추가
-MD5 보안 취약	레거시 해시 사용	BCrypt 기반 PasswordEncoder 전환 예정
+## 트러블슈팅
 
-배운 점 및 개선 계획
-회원 인증과 OAuth 흐름을 직접 구현하며 세션, 암호화, 외부 API 연동 구조를 이해함.
+| 문제 | 원인 | 해결 |
+| --- | --- | --- |
+| 로그인 시 비밀번호 불일치 | 평문/해시 혼용 | 가입·로그인 시 동일 해시 적용 |
+| 이메일 중복 가입 | 동시 요청 경쟁 | DB UNIQUE 제약 + 서비스 중복 검사 병행 |
+| 카카오 이메일 null | 일부 계정 이메일 미제공 | 닉네임 기반 식별자 생성 로직 추가 |
+| MD5 보안 취약 | 레거시 해시 사용 | BCrypt 기반 PasswordEncoder 전환 예정 |
+
+---
+
+## 배운 점 및 개선 계획
+
+회원 인증과 OAuth 흐름을 직접 구현하며 세션, 암호화, 외부 API 연동 구조를 이해함.  
 다음 단계에서는 다음을 계획함:
 
-Spring Security 기반 비밀번호 인코딩(BCrypt)
+- Spring Security 기반 비밀번호 인코딩(BCrypt)
+- 예외 및 응답 표준화
+- Swagger API 문서 자동화
+- 이메일 인증 및 비밀번호 재설정 절차 고도화
 
-예외 및 응답 표준화
+---
 
-Swagger API 문서 자동화
+## 디렉토리 구조
 
-이메일 인증 및 비밀번호 재설정 절차 고도화
-
-디렉토리 구조
-text
-코드 복사
+```text
 carindrive/
  ┣ src/main/java/com/carindrive/
  ┃ ┣ controller/
@@ -111,6 +115,4 @@ carindrive/
  ┃ ┣ member-mapper.xml
  ┃ ┗ social-mapper.xml
  ┗ pom.xml
-
-
-
+```
